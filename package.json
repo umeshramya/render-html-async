@@ -1,0 +1,19 @@
+{
+  "name": "render-html-async",
+  "version": "0.0.0",
+  "description": "This is a template render engine. This is very light. This engine substitutes the query string parameters inside the html page and renders it",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "render",
+    "template",
+    "html",
+    "engine",
+    "querystring"
+  ],
+  "author": "Dr Umesh R Bilagi",
+  "license": "MIT",
+  "dependencies": {}
+}
