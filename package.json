@@ -1,6 +1,6 @@
 {
   "name": "render-html-async",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "This is a template render engine. This is very light. This engine substitutes the query string parameters inside the html page and renders it",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,13 @@
   ],
   "author": "Dr Umesh R Bilagi",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/umeshramya/render-html-async.git"
+  },
+  "bugs": {
+    "url": "https://github.com/umeshramya/render-html-async/issues"
+  },
+  "homepage": "https://github.com/umeshramya/render-html-async#readme"
 }
