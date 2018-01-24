@@ -23,7 +23,7 @@ observe `{{key}}` symbol they contain keys of url querystring.
     </html>
 ```
 
-### renderHTML method usage
+### method renderHTML
 Method renderHTML  takes two arguments
 1. path
 2. url
@@ -47,14 +47,14 @@ Method renderHTML  takes two arguments
     })
     
 ```
-## method getParsedQueryString
+### method getParsedQueryString
 This method returns json object from url with querystring 
 ```
     var url = ./index?name=umesh&age=49
     var queryJSON = render.getParsedQueryString(url);
 ```
 
-## method createQueryString
+### method createQueryString
 This method creates queryString from json object
 
 ```
