@@ -1,4 +1,5 @@
 # render-html-async
+![vesrion 0.0.4](https://img.shields.io/badge/version-0.0.4-green.svg)
 This is a template render engine. This is very light. This engine substitutes the query string parameters of url to inside the html page and renders it
 
 ## Usage
@@ -31,7 +32,7 @@ Method renderHTML  takes two arguments
 
 `{{key}}` is key of arguments these get replaced after rendering see above
 ```
-var render = require("render-html-sync");//include in your module
+    var render = require("render-html-sync");//include in your module
 
     render.renderHTML("./index.html", "./index?name=umesh&age=49").then(function(data){
         //data varibale cotaines the render html as a string
@@ -46,8 +47,16 @@ var render = require("render-html-sync");//include in your module
     
 ```
 ## method getParsedQueryString
-This method returns json object querystring 
+This method returns json object from url with querystring 
 ```
-var render = require("render-html-sync");//include in your module
-var queryJSON = render.getParsedQueryString(url);
+    var url = ./index?name=umesh&age=49
+    var queryJSON = render.getParsedQueryString(url);
+```
+
+## method createQueryString
+This method creates queryString from json object
+
+```
+    var jsonobj = {"name" : "Anthony", "age" : 35, "sex" : "nale"}
+    var queryString = render.createQueryString(jsonOBJ);
 ```

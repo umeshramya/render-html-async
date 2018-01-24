@@ -2,16 +2,54 @@
 
 var fs = require("fs");
 var queryString = require("querystring");
-// var promise = require("")
+
+
+/*
+================================
+    getParsedQueryString method
+================================
+
+*/ 
 
 var getParsedQueryString = function(url){
+    // this creates json object from url with querystring
     var curURL = url;
     var queryStringIndex = curURL.indexOf("?");
     var qsString = curURL.substr(queryStringIndex + 1, curURL.length);
     return queryString.parse(qsString);
 }
 
-module.exports.getParsedQueryString = getParsedQueryString;
+module.exports.getParsedQueryString  = getParsedQueryString 
+/*
+============================
+    createQueryString method
+============================
+
+*/ 
+var createQueryString = function(jsonOBJ={}){
+    // this creates querystring from json object
+    var keys = Object.keys(jsonOBJ);
+    var queryString = "?";
+    for (let index = 0; index < keys.length; index++) {
+        if (queryString == "?"){
+            queryString += keys[index] + "=" + jsonOBJ[keys[index]];
+
+        }else{
+            queryString += "&" + keys[index] + "=" + jsonOBJ[keys[index]];
+        }
+        
+    }
+    return queryString;
+}
+
+module.exports.createQueryString = createQueryString;
+
+/*
+==================================
+    renderHTML method
+==================================
+
+*/ 
 
 var renderHTML = function(path, url){
 
@@ -42,3 +80,4 @@ var renderHTML = function(path, url){
 }
 
 module.exports.renderHTML = renderHTML;
+
