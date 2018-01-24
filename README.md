@@ -1,14 +1,45 @@
 # render-html-async
-This is a template render engine. This is very light. This engine substitutes the query string parameters inside the html page and renders it
+This is a template render engine. This is very light. This engine substitutes the query string parameters of url to inside the html page and renders it
 
 ## Usage
 
+### HTML page
+observe `{{key}}` symbol they contain keys of url querystring.
 ```
-var render = require("./index");
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Document</title>
+    </head>
+    <body>
+
+        <h1>{{name}}</h1>
+        <h1>{{age}}</h1>
+
+
+    </body>
+    </html>
+```
+
+### renderHTML method usage
+Method renderHTML  takes two arguments
+1. path
+2. utl
+path arguments is physical path in folder 
+url is the one with argumnets. For example url for the HTML page shown above `"./index?name=umesh&age=49"` in this `name` and `age` are keys
+
+`{{key}}` is key of arygiment these get replaced after rendering see above
+```
+var render = require("render-html-syync");//include in your module
 
     render.renderHTML("./index.html", "./index?name=umesh&age=49").then(function(data){
-        console.log(data)
+        //data varibale cotaines the render html as a string
+        //write code to use in route  are any other purpose
+        console.log(data);
+        
     }).catch(function(message){
+        //in case error cath block contains
+        //use message var for sending error message like 404 or 500
         console.log(message);
     })
     
