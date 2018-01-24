@@ -1,5 +1,9 @@
 # render-html-async
-![vesrion 0.0.4](https://img.shields.io/badge/version-0.0.4-green.svg)
+
+![vesrion 0.0.5](https://img.shields.io/badge/version-0.0.4-green.svg)
+![License MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)
+
+
 
 This is a template render engine. This is very light. This engine substitutes the query string parameters of url to inside the html page and renders it
 
