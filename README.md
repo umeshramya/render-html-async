@@ -24,13 +24,14 @@ observe `{{key}}` symbol they contain keys of url querystring.
 ### renderHTML method usage
 Method renderHTML  takes two arguments
 1. path
-2. utl
-path arguments is physical path in folder 
-url is the one with argumnets. For example url for the HTML page shown above `"./index?name=umesh&age=49"` in this `name` and `age` are keys
+2. url
 
-`{{key}}` is key of arygiment these get replaced after rendering see above
+`path` arguments is physical path in folder.
+`url` is the one with arguments. For example url for the HTML page shown above is `"./index?name=umesh&age=49"` in this `name` and `age` are keys
+
+`{{key}}` is key of arguments these get replaced after rendering see above
 ```
-var render = require("render-html-syync");//include in your module
+var render = require("render-html-sync");//include in your module
 
     render.renderHTML("./index.html", "./index?name=umesh&age=49").then(function(data){
         //data varibale cotaines the render html as a string
@@ -44,4 +45,9 @@ var render = require("render-html-syync");//include in your module
     })
     
 ```
-
+## method getParsedQueryString
+This method returns json object querystring 
+```
+var render = require("render-html-sync");//include in your module
+var queryJSON = render.getParsedQueryString(url);
+```
