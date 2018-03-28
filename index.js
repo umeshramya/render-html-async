@@ -1,8 +1,6 @@
 
-
 var fs = require("fs");
 var queryString = require("querystring");
-
 
 /*
 ================================
@@ -51,8 +49,8 @@ module.exports.createQueryString = createQueryString;
 
 */ 
 
-var renderHTML = function(path, url){
-
+var readHTML = function(path, url){
+    
     var promise = new Promise(function(resolve, reject){
         fs.readFile(path, null, function(err, data){
             if(err){
@@ -70,6 +68,8 @@ var renderHTML = function(path, url){
                     var patt = new RegExp(regular, "g");// create regular expression
                     renderData = renderData.replace(patt, parsedQuery[key]);// pass it renderData to replace all by looping all keys 
                 }
+                
+                renderData.indexOf(/{{get(w+)}}/)
                 resolve(renderData);
             }
     
@@ -77,6 +77,12 @@ var renderHTML = function(path, url){
     });
 
     return promise;
+
+}
+
+var renderHTML = function(path, url){
+    return readHTML(path, url);
+
 }
 
 module.exports.renderHTML = renderHTML;
