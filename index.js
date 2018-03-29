@@ -49,6 +49,13 @@ module.exports.createQueryString = createQueryString;
 
 */ 
 
+var components = {};
+
+var addComponents = function(name, path){
+    var component = fs.readFileSync(path);
+    components[name] = component;
+}
+
 var readHTML = function(path, url){
     
     var promise = new Promise(function(resolve, reject){
