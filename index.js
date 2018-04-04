@@ -55,7 +55,7 @@ var Pattern = {
     distal  : '}}'
 };
 exports.setPattern = function(proximal='{{', distal = '}}'){
-    Patern.proximal=proximal;
+    Pattern.proximal=proximal;
     Pattern.distal = distal;
 }
 
@@ -73,7 +73,7 @@ var setComponents = function (data) {
     var keys = Object.keys(components);
     for (let index = 0; index < keys.length; index++) {
         var key = keys[index];
-        var regular = `${Patern.proximal}get${key}${Patern.distal}`;
+        var regular = `${Pattern.proximal}get${key}${Pattern.distal}`;
         var patt = new RegExp(regular, "g");
         data = data.replace(patt, components[key]);
     }
@@ -96,7 +96,7 @@ var readHTML = function(path, url){
                     // looping through keys array to replace {{args}} in renderData string
                     key = keys[index];
                     // var regular = "{{" + key +  "}}";
-                    var regular = `${Patern.proximal}${key}${Pattern.distal}`;
+                    var regular = `${Pattern.proximal}${key}${Pattern.distal}`;
                     var patt = new RegExp(regular, "g");// create regular expression
                     renderData = renderData.replace(patt, parsedQuery[key]);// pass it renderData to replace all by looping all keys 
                 }
