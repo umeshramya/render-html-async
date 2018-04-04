@@ -101,7 +101,7 @@ var readHTML = function(path, url){
                     renderData = renderData.replace(patt, parsedQuery[key]);// pass it renderData to replace all by looping all keys 
                 }
                 
-                renderData.indexOf(/{{get(w+)}}/)
+
                 resolve(renderData);
             }
     
