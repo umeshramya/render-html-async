@@ -59,26 +59,30 @@ exports.setPattern = function(proximal='{{', distal = '}}'){
     Pattern.distal = distal;
 }
 
-exports.addComponentsaddComponents = function(name, path){
+exports.addComponents = function(name, path){
     // this method adds the comonts javascripts objects 
     // to be at beginging of application
     // name :- name of the components to be used in  path is file path with file also
     var component = fs.readFileSync(path);
-    components[name] = component;
+    components[name] = component.toString();
 }
 
 
 var setComponents = function (data) {
     // this replace the comoponent in of the data sent form main html file
     var keys = Object.keys(components);
+    var returnData = data;
+    var key;
     for (let index = 0; index < keys.length; index++) {
-        var key = keys[index];
-        var regular = `${Pattern.proximal}get${key}${Pattern.distal}`;
+        key = keys[index];
+        var regular = `${Pattern.proximal}get(${key})${Pattern.distal}`;
         var patt = new RegExp(regular, "g");
-        data = data.replace(patt, components[key]);
+        returnData = returnData.replace(patt, components[key]);
     }
-    return data;
+    return returnData;
 }
+
+module.exports.setComponents = setComponents;
 
 var readHTML = function(path, url){
     var promise = new Promise(function(resolve, reject){
@@ -86,12 +90,13 @@ var readHTML = function(path, url){
             if(err){
                 reject("File coud not be read");
             }else{
-                data = setComponents(data);// replacing the components
+                var renderData = data.toString();// converts data recived form reading file to tostring and asign to renderData 
+                renderData = setComponents(renderData);// replacing the components
                 var parsedQuery = getParsedQueryString(url);// this get json object with latest parsed query string
                 var keys = Object.keys(parsedQuery);// stores the keys of json object as array
                 var patt; //this store the regular expression 
                 var key ='';// single key from keys array
-                var renderData = data.toString();// converts data recived form reading file to tostring and asign to renderData 
+                
                 for (let index = 0; index < keys.length; index++) {
                     // looping through keys array to replace {{args}} in renderData string
                     key = keys[index];
