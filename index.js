@@ -76,8 +76,10 @@ var setComponents = function (data) {
     for (let index = 0; index < keys.length; index++) {
         key = keys[index];
         var regular = `${Pattern.proximal}get(${key})${Pattern.distal}`;
-        var patt = new RegExp(regular, "g");
-        returnData = returnData.replace(patt, components[key]);
+        // var patt = new RegExp(regular, "g");
+      
+        returnData = returnData.replace(regular, components[key]);
+       
     }
     return returnData;
 }
