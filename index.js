@@ -68,56 +68,6 @@ exports.addComponents = function(name, path){
 }
 
 
-var setComponents = function (data) {
-    // this replace the comoponent in of the data sent form main html file
-    var keys = Object.keys(components);
-    var returnData = data;
-    var key;
-    for (let index = 0; index < keys.length; index++) {
-        key = keys[index];
-        var regular = `${Pattern.proximal}get(${key})${Pattern.distal}`;
-        var patt = new RegExp(regular, "g");
-      
-        returnData = returnData.replace(regular, components[key]);
-       
-    }
-    return returnData;
-}
-
-module.exports.setComponents = setComponents;
-
-var readHTML = function(path, url){
-    var promise = new Promise(function(resolve, reject){
-        fs.readFile(path, null, function(err, data){
-            if(err){
-                reject("File coud not be read");
-            }else{
-                var renderData = data.toString();// converts data recived form reading file to tostring and asign to renderData 
-                renderData = setComponents(renderData);// replacing the components
-                var parsedQuery = getParsedQueryString(url);// this get json object with latest parsed query string
-                var keys = Object.keys(parsedQuery);// stores the keys of json object as array
-                var patt; //this store the regular expression 
-                var key ='';// single key from keys array
-                
-                for (let index = 0; index < keys.length; index++) {
-                    // looping through keys array to replace {{args}} in renderData string
-                    key = keys[index];
-                    // var regular = "{{" + key +  "}}";
-                    var regular = `${Pattern.proximal}${key}${Pattern.distal}`;
-                    var patt = new RegExp(regular, "g");// create regular expression
-                    renderData = renderData.replace(patt, parsedQuery[key]);// pass it renderData to replace all by looping all keys 
-                }
-                
-
-                resolve(renderData);
-            }
-    
-        });
-    });
-
-    return promise;
-
-}
 
 var renderHTML = function(path, url){
     fs.readFile(path, null, function(err, data){
@@ -125,11 +75,26 @@ var renderHTML = function(path, url){
             throw err;
         }else{
             var renderData = data.toString();// converts data recived form reading file to tostring and asign to renderData 
-            renderData = setComponents(renderData);// replacing the components
-        }
-    })
+            for (const key in components) {
+                let regular = `${Pattern.proximal}get(${key})${Pattern.distal}`;
+                let patt = new RegExp(regular, "g");// create regular expression
+                renderData = renderData.replace(patt, components[key]);// pass it renderData to replace all by looping all keys 
+            }
 
-}
+
+            var parsedQuery = getParsedQueryString(url);// this get json object with latest parsed query string
+            
+            for (const key in parsedQuery) {
+                let  regular = `${Pattern.proximal}${key}${Pattern.distal}`;
+                let patt = new RegExp(regular, "g");// create regular expression
+                renderData = renderData.replace(patt, parsedQuery[key]);// pass it renderData to replace all by looping all keys 
+               
+            }
+              return renderData;
+            }
+        })
+    }
+
 
 module.exports.renderHTML = renderHTML;
 
