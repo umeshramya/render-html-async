@@ -76,7 +76,7 @@ var setComponents = function (data) {
     for (let index = 0; index < keys.length; index++) {
         key = keys[index];
         var regular = `${Pattern.proximal}get(${key})${Pattern.distal}`;
-        // var patt = new RegExp(regular, "g");
+        var patt = new RegExp(regular, "g");
       
         returnData = returnData.replace(regular, components[key]);
        
@@ -120,7 +120,14 @@ var readHTML = function(path, url){
 }
 
 var renderHTML = function(path, url){
-    return readHTML(path, url);
+    fs.readFile(path, null, function(err, data){
+        if (err){
+            throw err;
+        }else{
+            var renderData = data.toString();// converts data recived form reading file to tostring and asign to renderData 
+            renderData = setComponents(renderData);// replacing the components
+        }
+    })
 
 }
 
