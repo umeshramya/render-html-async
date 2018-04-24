@@ -11,9 +11,19 @@
 
 var test = require("../index");
 var fs = require("fs");
-
+// let url= "?name=Umesh&age=45&sex=male"
+let url ={
+    name : "umesh",
+    age : 45,
+    sex : "Male"
+}
+console.log(typeof url)
 test.addComponents("header", __dirname + "/header.html");
 test.addComponents("footer", __dirname + "/footer.html");
 var data = fs.readFileSync(__dirname + "/index.html").toString();
 
-console.log(test.setComponents(data));
+test.renderHTML(__dirname + "/index.html", url).then(function(result){
+    console.log(result);
+}).catch(function(err){
+    console.log(err);
+})

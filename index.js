@@ -11,10 +11,16 @@ var queryString = require("querystring");
 
 var getParsedQueryString = function(url){
     // this creates json object from url with querystring
-    var curURL = url;
-    var queryStringIndex = curURL.indexOf("?");
-    var qsString = curURL.substr(queryStringIndex + 1, curURL.length);
-    return queryString.parse(qsString);
+    if((typeof url) == 'string'){
+        var curURL = url;
+        var queryStringIndex = curURL.indexOf("?");
+        var qsString = curURL.substr(queryStringIndex + 1, curURL.length);
+        return queryString.parse(qsString);
+    }else if((typeof url)== 'object'){
+        return url;
+    }else{
+        return {};
+    }
 }
 
 module.exports.getParsedQueryString  = getParsedQueryString 
@@ -70,13 +76,16 @@ exports.addComponents = function(name, path){
 
 
 var renderHTML = function(path, url){
+    return new Promise(function(resolve, reject){
+
+
     fs.readFile(path, null, function(err, data){
         if (err){
-            throw err;
+            resolve(err);
         }else{
             var renderData = data.toString();// converts data recived form reading file to tostring and asign to renderData 
             for (const key in components) {
-                let regular = `${Pattern.proximal}get(${key})${Pattern.distal}`;
+                let regular = `${Pattern.proximal}get\\(${key}\\)${Pattern.distal}`;
                 let patt = new RegExp(regular, "g");// create regular expression
                 renderData = renderData.replace(patt, components[key]);// pass it renderData to replace all by looping all keys 
             }
@@ -90,10 +99,12 @@ var renderHTML = function(path, url){
                 renderData = renderData.replace(patt, parsedQuery[key]);// pass it renderData to replace all by looping all keys 
                
             }
-              return renderData;
+              resolve (renderData);
             }
         })
-    }
+
+    });
+}
 
 
 module.exports.renderHTML = renderHTML;

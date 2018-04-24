@@ -1,6 +1,6 @@
 # render-html-async
 
-![vesrion 0.0.5](https://img.shields.io/badge/version-0.0.4-green.svg)
+![vesrion 0.0.5](https://img.shields.io/badge/version-0.0.6-green.svg)
 ![License MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)
 
 
@@ -11,7 +11,7 @@ This is a template render engine. This is very light. This engine substitutes th
 
 ### HTML page
 observe `{{key}}` symbol they contain keys of url querystring.
-```
+```html
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -36,7 +36,7 @@ Method renderHTML  takes two arguments
 `url` is the one with arguments. For example url for the HTML page shown above is `"./index?name=umesh&age=49"` in this `name` and `age` are keys
 
 `{{key}}` is key of arguments these get replaced after rendering see above
-```
+```js
     var render = require("render-html-sync");//include in your module
 
     render.renderHTML("./index.html", "./index?name=umesh&age=49").then(function(data){
@@ -53,15 +53,59 @@ Method renderHTML  takes two arguments
 ```
 ### method getParsedQueryString
 This method returns json object from url with querystring 
-```
-    var url = ./index?name=umesh&age=49
+
+```js
+    var url = "./index?name=umesh&age=49";
     var queryJSON = render.getParsedQueryString(url);
 ```
 
 ### method createQueryString
 This method creates queryString from json object
 
-```
+```js
     var jsonobj = {"name" : "Anthony", "age" : 35, "sex" : "nale"}
     var queryString = render.createQueryString(jsonOBJ);
 ```
+## Components
+### First add componets 
+```js
+    test.addComponents("header", __dirname + "/header.html");
+    test.addComponents("footer", __dirname + "/footer.html");
+```
+create html components(templates)
+1. header component `{{get(header)}}`
+```html
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Document</title>
+    </head>
+    <body>
+
+```
+2. footer componets `{{get(footer)}}`
+```html
+    </body>
+    </html>
+```
+3. acutual page with conatin this code 
+```html
+{{get(header)}}
+<h1>{{name}}</h1>
+<h1>{{age}}</h1>
+{{get(footer)}}
+```
+
+4. call render method
+```js
+    //This retuirns the promise 
+    test.renderHTML(__dirname + "/index.html", url).then(function(result){
+        console.log(result);
+    }).catch(function(err){
+        console.log(err);
+    })
+```
+
+## url argumentod `renderHTML`
+1. This could be querystring `?name=Umesh&age=45&gender=male`
+2. This couild object i.e `{name : "umesh", age : 45, gender : "male"}`
