@@ -30,9 +30,9 @@ observe `{{key}}` symbol they contain keys of url querystring.
 ### method renderHTML
 Method renderHTML  takes two arguments and callback
 1. `path`
-`path` arguments is physical path in folder.
-2. `url`
+    `path` arguments is physical path in folder.
 
+2. `url`
     a. This could be querystring `?name=Umesh&age=45&gender=male`
 
     b. This couild object i.e `{name : "umesh", age : 45, gender : "male"}`
@@ -40,9 +40,7 @@ Method renderHTML  takes two arguments and callback
      `{{key}}` is key of arguments these get replaced after rendering
 
 3. `callback`
-
     This is call function with err as first argument and data as second argument( html string);
-
 
 4. `partials` are also added. see below
 
