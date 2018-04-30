@@ -55,7 +55,7 @@ module.exports.createQueryString = createQueryString;
 ``
 */ 
 
-var components = {};
+var partials = {};
 var Pattern = {
     proximal : '{{',
     distal  : '}}'
@@ -65,29 +65,26 @@ exports.setPattern = function(proximal='{{', distal = '}}'){
     Pattern.distal = distal;
 }
 
-exports.addComponents = function(name, path){
+exports.addPartials = function(name, path){
     // this method adds the comonts javascripts objects 
     // to be at beginging of application
     // name :- name of the components to be used in  path is file path with file also
-    var component = fs.readFileSync(path);
-    components[name] = component.toString();
+    var partial = fs.readFileSync(path);
+    partials[name] = partial.toString();
 }
 
 
 
-var renderHTML = function(path, url){
-    return new Promise(function(resolve, reject){
-
-
-    fs.readFile(path, null, function(err, data){
+var renderHTML = function(path, url, callback){
+     fs.readFile(path, null, function(err, data){
         if (err){
-            resolve(err);
+            callback(err);
         }else{
             var renderData = data.toString();// converts data recived form reading file to tostring and asign to renderData 
-            for (const key in components) {
+            for (const key in partials) {
                 let regular = `${Pattern.proximal}get\\(${key}\\)${Pattern.distal}`;
                 let patt = new RegExp(regular, "g");// create regular expression
-                renderData = renderData.replace(patt, components[key]);// pass it renderData to replace all by looping all keys 
+                renderData = renderData.replace(patt, partials[key]);// pass it renderData to replace all by looping all keys 
             }
 
 
@@ -99,11 +96,12 @@ var renderHTML = function(path, url){
                 renderData = renderData.replace(patt, parsedQuery[key]);// pass it renderData to replace all by looping all keys 
                
             }
-              resolve (renderData);
-            }
-        })
+            
+            callback(null, renderData);
+        }
+    })
 
-    });
+
 }
 
 

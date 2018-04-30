@@ -18,12 +18,19 @@ let url ={
     sex : "Male"
 }
 console.log(typeof url)
-test.addComponents("header", __dirname + "/header.html");
-test.addComponents("footer", __dirname + "/footer.html");
+test.addPartials("header", __dirname + "/header.html");
+test.addPartials("footer", __dirname + "/footer.html");
 var data = fs.readFileSync(__dirname + "/index.html").toString();
 
-test.renderHTML(__dirname + "/index.html", url).then(function(result){
-    console.log(result);
-}).catch(function(err){
-    console.log(err);
+// test.renderHTML(__dirname + "/index.html", url).then(function(result){
+//     console.log(result);
+// }).catch(function(err){
+//     console.log(err);
+// })
+test.renderHTML(__dirname + "/index.html", url, function(err, data){
+    if(err){
+        throw Error(err);
+    }else{
+        console.log(data);
+    }
 })

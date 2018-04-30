@@ -1,6 +1,6 @@
 # render-html-async
 
-![vesrion 0.0.5](https://img.shields.io/badge/version-0.0.6-green.svg)
+![vesrion 0.0.5](https://img.shields.io/badge/version-1.0.0-green.svg)
 ![License MIT](https://img.shields.io/badge/License-MIT-yellowgreen.svg)
 
 
@@ -28,26 +28,33 @@ observe `{{key}}` symbol they contain keys of url querystring.
 ```
 
 ### method renderHTML
-Method renderHTML  takes two arguments
-1. path
-2. url
-
+Method renderHTML  takes two arguments and callback
+1. `path`
 `path` arguments is physical path in folder.
-`url` is the one with arguments. For example url for the HTML page shown above is `"./index?name=umesh&age=49"` in this `name` and `age` are keys
+2. `url`
 
-`{{key}}` is key of arguments these get replaced after rendering see above
+    a. This could be querystring `?name=Umesh&age=45&gender=male`
+
+    b. This couild object i.e `{name : "umesh", age : 45, gender : "male"}`
+     in above example name and gender are keys
+     `{{key}}` is key of arguments these get replaced after rendering
+
+3. `callback`
+
+    This is call function with err as first argument and data as second argument( html string);
+
+
+4. `partials` are also added. see below
+
 ```js
     var render = require("render-html-sync");//include in your module
 
-    render.renderHTML("./index.html", "./index?name=umesh&age=49").then(function(data){
-        //data varibale cotaines the render html as a string
-        //write code to use in route  are any other purpose
+    test.renderHTML(__dirname + "/index.html", url, function(err, data){
+    if(err){
+        throw Error(err);
+    }else{
         console.log(data);
-        
-    }).catch(function(message){
-        //in case error cath block contains
-        //use message var for sending error message like 404 or 500
-        console.log(message);
+    }
     })
     
 ```
@@ -66,14 +73,16 @@ This method creates queryString from json object
     var jsonobj = {"name" : "Anthony", "age" : 35, "sex" : "nale"}
     var queryString = render.createQueryString(jsonOBJ);
 ```
-## Components
-### First add componets 
+
+
+## Partials
+### First add Partials 
 ```js
-    test.addComponents("header", __dirname + "/header.html");
-    test.addComponents("footer", __dirname + "/footer.html");
+    test.addPartials("header", __dirname + "/header.html");
+    test.addPartials("footer", __dirname + "/footer.html");
 ```
-create html components(templates)
-1. header component `{{get(header)}}`
+create html partials(templates)
+1. header Partial `{{get(header)}}`
 ```html
     <!DOCTYPE html>
     <html lang="en">
@@ -83,7 +92,7 @@ create html components(templates)
     <body>
 
 ```
-2. footer componets `{{get(footer)}}`
+2. footer Partial `{{get(footer)}}`
 ```html
     </body>
     </html>
@@ -98,14 +107,12 @@ create html components(templates)
 
 4. call render method
 ```js
-    //This retuirns the promise 
-    test.renderHTML(__dirname + "/index.html", url).then(function(result){
-        console.log(result);
-    }).catch(function(err){
-        console.log(err);
+    test.renderHTML(__dirname + "/index.html", url, function(err, data){
+    if(err){
+        throw Error(err);
+    }else{
+        console.log(data);
+    }
     })
-```
 
-## url argumentod `renderHTML`
-1. This could be querystring `?name=Umesh&age=45&gender=male`
-2. This couild object i.e `{name : "umesh", age : 45, gender : "male"}`
+```
